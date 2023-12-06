@@ -57,7 +57,7 @@ PYTHONPATH=. python main.py db upgrade heads
 ```
 
 
-## Start orchestraor
+## Start orchestrator
 
 ```shell
 # if environment not active yet, run
@@ -122,9 +122,13 @@ Documentation:
 http://127.0.0.1:8080/api/docs
 
 Also can try:
+
 http://127.0.0.1:8080/api/workflows/
+
 http://127.0.0.1:8080/api/subscriptions/all
+
 http://127.0.0.1:8080/api/processes/
+
 http://127.0.0.1:8080/api/products/
 
 GUI:
