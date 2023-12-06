@@ -18,9 +18,7 @@ sudo apt  install gh
 
 ## AiiDA setup
 
-Need to have:
-
-verdi computer graham and narval set up as computers (under those exact names)
+Need to have graham and narval set up as computers (under those exact names)
 
 Need to have VASP codes set up in aiida under vasp@graham and vasp@narval.
 
