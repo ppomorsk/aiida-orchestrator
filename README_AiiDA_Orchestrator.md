@@ -16,6 +16,16 @@ sudo apt-get install --yes postgresql git virtualenvwrapper nodejs
 sudo apt  install gh
 ```
 
+## AiiDA setup
+
+Need to have:
+
+verdi computer graham and narval set up as computers (under those exact names)
+
+Need to have VASP codes set up in aiida under vasp@graham and vasp@narval.
+
+Need to have ssh access under aiida_ctetsass account to graham and narval.
+
 ## Create database
 
 ```shell
@@ -166,3 +176,20 @@ The script needs to have a specific format, as it has to accept the cluster name
 Take a look at si.py for an example.
 
 Finaly, si_wrapper.py can launch this AiiDA job outside of the orchestrator.
+
+## Monitoring the clusters
+
+In the clusterlogs there are scripts which should be run periodically to log the load on the clusters,
+which is stored in log files, separate for each cluster (should use database for this in the future).
+
+Currently the monitoring scripts are run by hand, but they could be modified to run as cron jobs, or run
+inside the orchestrator itself as a periodically executed task.
+
+The file computers_aiida.json contains a list of active computers to be used by the the orchestrator to 
+launch AiiDA jobs.
+
+For details of how the monitoring data is used see:
+
+~/aiida-orchestrator/workflows/user/create_user.py 
+
+
