@@ -137,3 +137,32 @@ http://127.0.0.1:3000
 
 You can use the `New Process` button to create subscription on the defined
 products.
+
+
+## Using the command line
+
+The GUI can be used to launch processes, i.e. create user groups (job groups) and users (jobs).
+However, filling out the forms by hand is only useful for basic testing.
+
+For submitting a larger number of jobs, one needs command line tools.  
+That is provided in scripts directory.
+
+First, need to create at least one user group (job group) that every job needs to have.
+
+Do this by running:
+
+python create_user_group.py
+
+Job group name can be changed in the script as needed.
+
+Then submit job by running:
+
+python create_user.py
+
+The file name of the AiiDA script to be launched needs to be specified.
+
+The script needs to have a specific format, as it has to accept the cluster name as argument.
+
+Take a look at si.py for an example.
+
+Finaly, si_wrapper.py can launch this AiiDA job outside of the orchestrator.
