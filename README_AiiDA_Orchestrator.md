@@ -143,6 +143,10 @@ GUI:
 
 http://127.0.0.1:3000
 
+If GUI gives blank page, try
+
+http://127.0.0.1:3000/subscriptions
+
 You can use the `New Process` button to create subscription on the defined
 products.
 
