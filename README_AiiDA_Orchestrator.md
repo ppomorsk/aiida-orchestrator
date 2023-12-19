@@ -201,7 +201,21 @@ For details of how the monitoring data is used see:
 
 ~/aiida-orchestrator/workflows/user/create_user.py 
 
+## Scheduling tasks
 
+It should be possible to create 
+
+~/aiida-orchestrator/schedules
+
+with content analogous to
+
+.virtualenvs/example-orchestrator/lib/python3.10/site-packages/orchestrator/schedules
+
+so that it holds additional user defined schedules that can be seen with
+
+python main.py scheduler show-schedule
+
+However, this is not documented and currently does not work?
 
 ## Developing the code
 
