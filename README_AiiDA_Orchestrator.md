@@ -180,8 +180,15 @@ Finaly, si_wrapper.py can launch this AiiDA job outside of the orchestrator.
 In the clusterlogs there are scripts which should be run periodically to log the load on the clusters,
 which is stored in log files, separate for each cluster (should use database for this in the future).
 
-Currently the monitoring scripts are run by hand, but they could be modified to run as cron jobs, or run
-inside the orchestrator itself as a periodically executed task.
+The monitoring scripts can be run by hand, or they could be modified to run as cron jobs,
+
+Monitoring can also be done by a task in orchestrator:
+
+~/aiida-orchestrator/workflows/tasks/nightly_sync.py
+
+This task will be available in the task launching interface of orchestrator GUI.
+It should also be possible to run it via scheduling functionality of orchestrator but
+that is not implemented yet.
 
 The file computers_aiida.json contains a list of active computers to be used by the the orchestrator to 
 launch AiiDA jobs.
@@ -189,5 +196,41 @@ launch AiiDA jobs.
 For details of how the monitoring data is used see:
 
 ~/aiida-orchestrator/workflows/user/create_user.py 
+
+
+
+## Developing the code
+
+If any changes are made to the migration files, then the database needs to be rebuilt.
+
+Doing this is also useful if the orchestrator or GUI gets into disfunctional state.
+
+```shell
+sudo -u postgres psql
+
+DROP DATABASE "orchestrator-core";
+
+exit
+
+sudo -u postgres createdb orchestrator-core -O nwa
+
+# get fresh git checkout if orchestrator code changed
+
+rm -rf aiida-orchestrator
+git clone git@github.com:ppomorsk/aiida-orchestrator.git
+cd aiida-orchestrator
+
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+workon example-orchestrator
+
+# remove migrations directory if it exists
+
+rm -rf migrations 
+
+PYTHONPATH=. python main.py db init
+cp examples/2023*.py  migrations/versions/schema/
+PYTHONPATH=. python main.py db upgrade heads
+
+```
 
 
