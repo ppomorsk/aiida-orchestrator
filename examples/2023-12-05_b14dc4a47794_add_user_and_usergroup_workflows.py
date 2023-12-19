@@ -1,16 +1,15 @@
-"""add user and usergroup workflows.
+"""add User and UserGroup workflows.
 
-Revision ID: 130cb51287a4
-Revises: 94d04a8973c0
-Create Date: 2023-10-03 16:41:06.901425
-
+Revision ID: b14dc4a47794
+Revises: 8779c7b3b73e
+Create Date: 2023-12-05 06:09:00.937229
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = '130cb51287a4'
-down_revision = '9a31b6bf3e85'
+revision = 'b14dc4a47794'
+down_revision = '8779c7b3b73e'
 branch_labels = None
 depends_on = None
 
