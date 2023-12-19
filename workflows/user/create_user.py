@@ -15,6 +15,8 @@ from products.product_types.user_group import UserGroup
 
 from subprocess import PIPE, run
 
+import os
+
 def user_group_selector() -> list:
     user_group_subscriptions = {}
     for user_group_id, user_group_description in (
@@ -77,8 +79,8 @@ def initialize_subscription(subscription: UserInactive, username: str, age: int,
     subscription = UserProvisioning.from_other_lifecycle(subscription, SubscriptionLifecycle.PROVISIONING)
 
     import json
-
-    f=open("/home/ubuntu/aiida-orchestrator/clusterlogs/computers_aiida.json","r")
+    home_dir = os.path.expanduser('~/')
+    f=open(home_dir+"aiida-orchestrator/clusterlogs/computers_aiida.json","r")
     g=f.readlines()
     f.close()
 
@@ -91,7 +93,7 @@ def initialize_subscription(subscription: UserInactive, username: str, age: int,
     fairshare_list=[]
     for cluster in computer_list:
 
-        f=open("/home/ubuntu/aiida-orchestrator/clusterlogs/"+cluster+".load.log","r")
+        f=open(home_dir+"aiida-orchestrator/clusterlogs/"+cluster+".load.log","r")
         g=f.readlines()
         f.close()
         last=g[-1].split(",")

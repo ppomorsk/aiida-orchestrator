@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 # specify the user group the user to be created will belong to
 group_description="si_jobs"
@@ -25,7 +26,9 @@ for product in y:
 
 
 # specify filename with aiida code
-filename="/home/ubuntu/aiida-orchestrator/scripts/si.py"
+home_dir = os.path.expanduser('~/')
+
+filename=home_dir+"aiida-orchestrator/scripts/si.py"
 
 url="http://127.0.0.1:8080/api/processes/create_user"
 

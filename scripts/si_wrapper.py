@@ -5,8 +5,11 @@ Simple wrapper to run AiiDA job without orchestrator
 
 
 from subprocess import PIPE, run
+import os
 
-file_name ="/home/ubuntu/aiida-orchestrator/scripts/si.py" 
+home_dir = os.path.expanduser('~/')
+
+file_name = home_dir+"aiida-orchestrator/scripts/si.py" 
 
 computerselect="narval"
 

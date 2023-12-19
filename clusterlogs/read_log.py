@@ -5,8 +5,11 @@ Test program to see if logs read correctly"
 
 
 import json
+import os
 
-f=open("/home/ubuntu/computers/computers_aiida.json","r")
+home_dir = os.path.expanduser('~/')
+
+f=open(home_dir+"aiida-orchestrator/clusterlogs/computers_aiida.json","r")
 g=f.readlines()
 f.close()
 
@@ -19,7 +22,7 @@ for d in computers:
 fairshare_list=[]
 for cluster in computer_list:
 
-    f=open("/home/ubuntu/computers/"+cluster+".load.log","r")
+    f=open(home_dir+"aiida-orchestrator/clusterlogs/"+cluster+".load.log","r")
     g=f.readlines()
     f.close()
     last=g[-1].split(",")
