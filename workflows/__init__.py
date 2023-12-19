@@ -6,3 +6,4 @@ LazyWorkflowInstance("workflows.user_group.terminate_user_group", "terminate_use
 LazyWorkflowInstance("workflows.user.create_user", "create_user")
 LazyWorkflowInstance("workflows.user.modify_user", "modify_user")
 LazyWorkflowInstance("workflows.user.terminate_user", "terminate_user")
+LazyWorkflowInstance("workflows.tasks.nightly_sync", "task_sync_from")

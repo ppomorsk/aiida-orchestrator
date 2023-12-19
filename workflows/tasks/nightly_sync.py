@@ -1,19 +1,19 @@
-"""
+import time
 
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
-workon example-orchestrator
+import structlog
 
-
-The same can also be done by a task defined in
-
-~/aiida-orchestrator/workflows/tasks/nightly_sync.py
-
-
-"""
+from orchestrator.targets import Target
+from orchestrator.types import State
+from orchestrator.workflow import StepList, done, init, step, workflow
 
 import sys
 import paramiko
 import datetime
+import os
+import json
+
+logger = structlog.get_logger(__name__)
+
 
 def get_cluster_data(cluster):
     #account='def-ctetsass_gpu'
@@ -55,20 +55,32 @@ def get_cluster_data(cluster):
 
     return num_cores,fairshare
 
-assert len(sys.argv)==2,"must give cluster name as command line argument"
-cluster=sys.argv[1]
-
-# clusters: graham, narval for now
-assert cluster=="graham" or cluster=="narval","only graham or narval"
-
-hostname=cluster+".computecanada.ca"
-output=get_cluster_data(hostname)
-print(output)
-
-ctime=datetime.datetime.now()
-
-f=open(cluster+".load.log","a")
-f.write(str(output[0])+","+str(output[1])+","+str(ctime)+"\n")
-f.close()
 
 
+
+
+@step("NSO calls")
+def nso_calls() -> State:
+    logger.info("Start NSO calls", ran_at=time.time())
+
+    home_dir = os.path.expanduser('~/')
+    f=open(home_dir+"aiida-orchestrator/clusterlogs/computers_aiida.json","r")
+    computers=f.readlines()
+    f.close()
+    assert(len(computers)==1)
+    computers=json.loads(computers[0])
+    for computer in computers:
+        cluster=computer["computer"]
+        hostname=cluster+".computecanada.ca"
+        output=get_cluster_data(hostname)
+        ctime=datetime.datetime.now()
+        f=open(home_dir+"aiida-orchestrator/clusterlogs/"+cluster+".load.log","a")
+        f.write(str(output[0])+","+str(output[1])+","+str(ctime)+"\n")
+        f.close()
+
+    logger.info("NSO calls finished", done_at=time.time())
+
+
+@workflow("Nightly sync", target=Target.SYSTEM)
+def task_sync_from() -> StepList:
+    return init >> nso_calls >> done
