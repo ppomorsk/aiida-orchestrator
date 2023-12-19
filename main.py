@@ -4,6 +4,7 @@ from orchestrator.settings import AppSettings
 
 import products  # noqa: F401  Side-effects
 import workflows  # noqa: F401  Side-effects
+import schedules
 
 app = OrchestratorCore(base_settings=AppSettings())
 

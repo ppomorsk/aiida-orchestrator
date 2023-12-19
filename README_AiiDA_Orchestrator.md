@@ -181,21 +181,22 @@ Finaly, si_wrapper.py can launch this AiiDA job outside of the orchestrator.
 
 ## Monitoring the clusters
 
-In the clusterlogs there are scripts which should be run periodically to log the load on the clusters,
+The file computers_aiida.json contains a list of active computers to be used by the the orchestrator to
+launch AiiDA jobs.  It is assumbed that it is possible to connect these to ssh and launch
+AiiDA processes.
+
+In the clusterlogs there are scripts which can be executed  to log the load on the clusters,
 which is stored in log files, separate for each cluster (should use database for this in the future).
 
 The monitoring scripts can be run by hand, or they could be modified to run as cron jobs,
 
-Monitoring can also be done by a task in orchestrator:
+These are for testing only, as proper monitoring should be a task in the orchestrator:
 
 ~/aiida-orchestrator/workflows/tasks/nightly_sync.py
 
 This task will be available in the task launching interface of orchestrator GUI.
-It should also be possible to run it via scheduling functionality of orchestrator but
-that is not implemented yet.
 
-The file computers_aiida.json contains a list of active computers to be used by the the orchestrator to 
-launch AiiDA jobs.
+However, it should be run as a scheduled task, as described below.
 
 For details of how the monitoring data is used see:
 
@@ -203,19 +204,23 @@ For details of how the monitoring data is used see:
 
 ## Scheduling tasks
 
-It should be possible to create 
+Schedules for running tasks can be defined in
 
 ~/aiida-orchestrator/schedules
 
-with content analogous to
+This creates schedules in addition to those defined in orchestrator itself.
 
-.virtualenvs/example-orchestrator/lib/python3.10/site-packages/orchestrator/schedules
-
-so that it holds additional user defined schedules that can be seen with
+The schedules currently set can be listed with:
 
 python main.py scheduler show-schedule
 
-However, this is not documented and currently does not work?
+Any one of these can be forced to run immediately with:
+
+PYTHONPATH=. python main.py scheduler force run_nightly_monitoring
+
+To start running the scheduler, execute and keep running
+
+PYTHONPATH=. python main.py scheduler run
 
 ## Developing the code
 
